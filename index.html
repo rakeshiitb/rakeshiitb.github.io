@@ -1,123 +1,38 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rakesh Kumar's Homepage</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <!-- Bootstrap -->
-            <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    </head>
-    
-    <body>
-        <!-- 
-<nav class="navbar-wrapper navbar-default navbar-static-top" role="navigation">
-            <div class="container">
-                <!~~ Brand and toggle get grouped for better mobile display ~~>
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand"><b>Deep Ray</b></a>
-                </div>
-                
-                <!~~ Collect the nav links, forms, and other content for toggling ~~>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav pull-right">
-                        <li class="active"><a href="#"> Home</a></li>
-                        <!~~<li><a href="about.html"> Personal</a></li>~~>
-                        <li><a href="cv.html"> CV</a></li> 
-                        <!~~ <li><a href="research.html"> Research</a></li> ~~>
-                        <li><a href="publications.html"> Publications</a></li>
-                        <li><a href="codes.html"> Codes</a></li>
-                        <li><a href="teaching.html"> Teaching</a></li>
-                        <li><a href="contact.html"> Contact</a></li>
-                    </ul>
-                </div><!~~ /.navbar-collapse ~~>
-            </div>
-        </nav>
- -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-        <div class="container">
-            <a class="navbar-brand" href="#" mb-0 h1>Rakesh Kumar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-           		 <span class="navbar-toggler-icon"></span>
-            </button>
-            
-  		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-    	<ul class="navbar-nav mr-auto ">
-       		 <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link" href="cv.html">CV</a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link" href="publications.html">Publications</a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link" href="codes.html">Codes</a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link" href="teaching.html">Teaching</a>
-             </li>
-        	 <li class="nav-item">
-            	    <a class="nav-link" href="contact.html">Contact</a>
-             </li>
-        </div>
-        </div>
-        </nav>
-        
-        <br>
-        <br>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <center><img class="img-thumbnail" alt="Thumbnail Image" src="images/selfpic.jpg"></center>
-                    
-                    <center><hr><b>TIFR-CAM</b><br>
-                    Centre for Applied Mathematics<br>
-                    Bangalore<hr><center>
-                    
-                </div>
-                <div class="col-md-6">
-       
-                    <p class="text-justify">Hi! hii
-                      <ul>
-                        <li><b>Hyperbolic conservation laws: </b>
-							<p class="text-justify">  
-							 
+---
+layout: default
+title: Home
+---
 
-                        </li>
-                        
-                        <li><b>WENO Scheme:</b>
-                            <p class="text-justify"> Hi
+<div class="posts">
+  {% for post in paginator.posts %}
+  <div class="post">
+    <h1 class="post-title">
+      <a href="{{ site.baseurl }}/{{ post.url }}">
+        {{ post.title }}
+      </a>
+    </h1>
 
-                        </li>
-                        
-                        <li><b>DG methods: </b>
-                            <p class="text-justify"> 
+    <span class="post-date">{{ post.date | date_to_string }}</span>
 
-                        </li>
-                        
-                        
-                      </ul>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                   <center><font face="lucida" size="5" color="GoldenRod">&ldquo;.&rdquo; </font></center>
-                   <center><font size="2">Anonymous </font></center>
-                </div>
-            </div>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-        <script src="js/bootstrap.min.js"></script>
+    {{ post.content }}
+  </div>
+  {% endfor %}
+</div>
 
-    </body>
-</html>
+<div class="pagination">
+  {% if paginator.next_page %}
+    <a class="pagination-item older" href="{{ site.baseurl }}/page{{paginator.next_page}}">Older</a>
+  {% else %}
+    <span class="pagination-item older">Older</span>
+  {% endif %}
+  {% if paginator.previous_page %}
+    {% if paginator.page == 2 %}
+      <a class="pagination-item newer" href="{{ site.baseurl }}/">Newer</a>
+    {% else %}
+      <a class="pagination-item newer" href="{{ site.baseurl }}/page{{paginator.previous_page}}">Newer</a>
+    {% endif %}
+  {% else %}
+    <span class="pagination-item newer">Newer</span>
+  {% endif %}
+</div>
+
