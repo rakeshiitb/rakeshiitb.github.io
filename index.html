@@ -1,119 +1,474 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-<title>Rakesh Kumar</title>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="styles/layout.css" type="text/css">
-<!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rakesh Kumar — Department of Mathematics, Mahindra University</title>
+  <meta name="description" content="Rakesh Kumar, Assistant Professor of Mathematics at Mahindra University. Numerical methods for hyperbolic conservation laws: WENO, Discontinuous Galerkin and hybrid schemes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fbf8f3;
+      --bg-alt: #f3eee5;
+      --surface: #fffdf9;
+      --text: #22201c;
+      --text-soft: #4a463f;
+      --muted: #776f63;
+      --line: #ddd4c4;
+      --accent: #7a2f1d;
+      --accent-2: #b5832e;
+      --link: #284b7a;
+      --shadow: rgba(40, 28, 12, 0.08);
+      --serif-display: 'Libre Baskerville', Georgia, serif;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    }
+    :root[data-theme="dark"] {
+      --bg: #16130f;
+      --bg-alt: #1d1914;
+      --surface: #211c16;
+      --text: #ebe4d6;
+      --text-soft: #c9c0b0;
+      --muted: #918774;
+      --line: #3a3229;
+      --accent: #d98463;
+      --accent-2: #d6aa58;
+      --link: #79a6dc;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      transition: background .3s, color .3s;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { color: var(--accent); text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+
+    /* Navigation */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      max-width: 1080px; margin: 0 auto; padding: 0 1.25rem;
+      height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .brand { font-family: var(--serif-display); font-size: 1.15rem; color: var(--text); }
+    .brand:hover { text-decoration: none; color: var(--accent); }
+    .nav-links { display: flex; gap: 1.25rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--text-soft); font-size: .95rem; }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+    .icon-btn {
+      background: none; border: 1px solid var(--line); color: var(--text-soft);
+      width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .menu-btn { display: none; }
+
+    /* Layout */
+    main { max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
+    section { padding: 4rem 0 1rem; }
+    .section-title {
+      font-family: var(--serif-display); font-weight: 400; font-size: 1.7rem;
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.75rem;
+    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+    .section-title .num { font-family: var(--mono); font-size: .8rem; color: var(--accent-2); }
+
+    /* Hero */
+    .hero {
+      display: grid; grid-template-columns: 240px 1fr; gap: 3rem; align-items: center;
+      padding: 4.5rem 0 3rem; border-bottom: 1px solid var(--line);
+    }
+    .portrait {
+      width: 240px; aspect-ratio: 4 / 5; object-fit: cover;
+      border: 1px solid var(--line); padding: 6px; background: var(--surface);
+      box-shadow: 6px 6px 0 var(--bg-alt);
+    }
+    .hero h1 { font-family: var(--serif-display); font-weight: 400; font-size: clamp(2rem, 5vw, 2.9rem); line-height: 1.2; }
+    .hero .role { font-size: 1.2rem; color: var(--accent); margin-top: .4rem; }
+    .hero .affil { color: var(--text-soft); }
+    .hero .interests { margin-top: 1rem; font-style: italic; color: var(--muted); }
+    .hero-links { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
+    .pill {
+      font-family: var(--mono); font-size: .8rem; padding: .35rem .85rem;
+      border: 1px solid var(--line); border-radius: 999px; color: var(--text-soft); background: var(--surface);
+    }
+    .pill:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+    /* News */
+    .news { list-style: none; border-left: 2px solid var(--accent-2); padding-left: 1.25rem; }
+    .news li { margin-bottom: .6rem; }
+    .news time { font-family: var(--mono); font-size: .8rem; color: var(--muted); margin-right: .6rem; }
+
+    /* Timeline (education / experience) */
+    .timeline { list-style: none; position: relative; padding-left: 1.5rem; }
+    .timeline::before { content: ''; position: absolute; left: 4px; top: .5rem; bottom: .5rem; width: 1px; background: var(--line); }
+    .timeline li { position: relative; margin-bottom: 1.6rem; }
+    .timeline li::before {
+      content: ''; position: absolute; left: -1.5rem; top: .55rem;
+      width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent);
+    }
+    .item-head { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .item-title { font-weight: 600; }
+    .item-date { font-family: var(--mono); font-size: .8rem; color: var(--muted); white-space: nowrap; }
+    .item-org { color: var(--accent); }
+    .item-note { color: var(--text-soft); font-size: 1rem; }
+
+    /* Cards */
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.1rem; }
+    .card {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+      padding: 1.2rem 1.3rem; transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--shadow); }
+    .card .code { font-family: var(--mono); font-size: .78rem; color: var(--accent-2); }
+    .card h3 { font-size: 1.1rem; font-weight: 600; margin: .2rem 0 .35rem; }
+    .card p { font-size: .98rem; color: var(--text-soft); }
+
+    /* Publications */
+    .pub-group { font-family: var(--mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 1.5rem 0 .75rem; }
+    .pubs { list-style: none; counter-reset: pub; }
+    .pubs li { counter-increment: pub; position: relative; padding-left: 2.6rem; margin-bottom: 1.1rem; }
+    .pubs li::before {
+      content: '[' counter(pub) ']'; position: absolute; left: 0; top: .1rem;
+      font-family: var(--mono); font-size: .8rem; color: var(--accent);
+    }
+    .pub-title { font-weight: 600; }
+    .pub-authors .me { text-decoration: underline; text-underline-offset: 3px; }
+    .pub-venue { font-style: italic; color: var(--text-soft); }
+
+    /* Contact */
+    .contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .contact h3 { font-family: var(--mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 500; margin-bottom: .4rem; }
+
+    footer {
+      max-width: 1080px; margin: 4rem auto 0; padding: 1.5rem 1.25rem 2.5rem;
+      border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; text-align: center;
+    }
+
+    /* Mobile */
+    @media (max-width: 820px) {
+      .menu-btn { display: inline-flex; }
+      .nav-links {
+        display: none; position: absolute; top: 60px; left: 0; right: 0;
+        flex-direction: column; align-items: flex-start; gap: .9rem;
+        background: var(--bg); border-bottom: 1px solid var(--line); padding: 1rem 1.25rem 1.25rem;
+      }
+      .nav-links.open { display: flex; }
+      .hero { grid-template-columns: 1fr; gap: 1.75rem; padding-top: 2.5rem; }
+      .portrait { width: 180px; }
+      section { padding-top: 3rem; }
+    }
+  </style>
+  <script>
+    // Apply saved/system theme before paint to avoid a flash.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
 </head>
 <body>
-<div class="wrapper row1">
-  <header id="header" class="clear">
-    <div id="hgroup">
-      <h1><a href="#">Rakesh Kumar</a></h1>
-      <h2>Welcome to my website</h2>
-    </div>
-    <form action="#" method="post">
-      <fieldset>
-        <legend>Search:</legend>
-        <input type="text" value="Search Our Website&hellip;" onFocus="this.value=(this.value=='Search Our Website&hellip;')? '' : this.value ;">
-        <input type="submit" id="sf_submit" value="submit">
-      </fieldset>
-    </form>
-    <nav>
-      <ul>
-        <li><a href="#">About me </a></li>
-        <li><a href="#">Research </a></li>
-        <li><a href="#">Publication </a></li>
-        <li><a href="#">Conference  </a></li>
-        <li><a href="#">Contact  </a></li>
-     <li class="last"><a href="#">Text </a></li>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">Rakesh Kumar</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#project">Project</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
-    </nav>
-  </header>
-</div>
-<!-- content -->
-<div class="wrapper row2">
-  <div id="container" class="clear">
-    <!-- Slider -->
-    <section id="slider" class="clear">
-      <figure><img src="images/demo/130x130.gif" alt="">
-        <figcaption>
-          <h2> Rakesh Kumar</h2>
-          <p>Hi I am postdoctoral fellow at TIFR-CAM Bangalore</p>
-          <footer class="more"><a href="#">Read More &raquo;</a></footer>
-        </figcaption>
-      </figure>
+      <div>
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">◐</button>
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- ===== Hero ===== -->
+    <header class="hero">
+      <!-- TODO: put your photo in assets/images/ and update this src -->
+      <img class="portrait" src="assets/images/profile.svg" alt="Photo of Rakesh Kumar">
+      <div>
+        <h1>Rakesh Kumar</h1>
+        <p class="role">Assistant Professor</p>
+        <p class="affil">Department of Mathematics, Mahindra University, Hyderabad</p>
+        <p class="interests">Numerical methods for hyperbolic conservation laws · WENO · Discontinuous Galerkin · Hybrid methods</p>
+        <div class="hero-links">
+          <!-- TODO: add your CV as assets/files/CV.pdf, then uncomment -->
+          <!-- <a class="pill" href="assets/files/CV.pdf">CV</a> -->
+          <a class="pill" href="https://scholar.google.co.in/citations?user=EuBKGZMAAAAJ&amp;hl=en">Google Scholar</a>
+          <a class="pill" href="https://github.com/rakeshiitb">GitHub</a>
+          <a class="pill" href="mailto:rakeshiitb21@gmail.com">Email</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== About ===== -->
+    <section id="about">
+      <h2 class="section-title"><span class="num">01</span>About</h2>
+      <p>
+        I am an Assistant Professor in the Department of Mathematics, Mahindra University, Hyderabad.
+        Before that, I was a Post-Doctoral Fellow at the School of Mathematics,
+        <a href="https://www.iisertvm.ac.in/">IISER Thiruvananthapuram</a>, and at the
+        <a href="https://www.math.tifrbng.res.in/">Tata Institute of Fundamental Research, Centre for Applicable Mathematics (TIFR-CAM)</a>, Bangalore.
+        I received my Ph.D. in Mathematics from the <a href="http://www.math.iitb.ac.in/">Department of Mathematics</a>,
+        <a href="http://www.iitb.ac.in/">Indian Institute of Technology Bombay</a>.
+      </p>
+      <p style="margin-top:1rem">
+        My research is on the development of numerical schemes for hyperbolic conservation laws. In particular,
+        I am interested in Weighted Essentially Non-Oscillatory (WENO), Discontinuous Galerkin (DG) and hybrid methods.
+        In recent work, we developed constraint-preserving Discontinuous Galerkin methods for the ideal magnetohydrodynamics equations.
+      </p>
+      <h3 class="pub-group">News</h3>
+      <ul class="news">
+        <li><time>2022</time>“Multi-level WENO schemes with an adaptive characteristic-wise reconstruction for system of Euler equations” published in <em>Computers &amp; Fluids</em>.</li>
+        <li><time>2021</time>“Globally divergence-free DG scheme for ideal compressible MHD” published in <em>Communications in Applied Mathematics and Computational Science</em>.</li>
+        <li><time>2020</time>“Constraint preserving discontinuous Galerkin method for ideal compressible MHD” published in <em>Journal of Scientific Computing</em>.</li>
+      </ul>
     </section>
-    <!-- main content -->
-    <div id="intro">
-      <section class="clear">
-        <!-- article 1 -->
-        <article class="three_quarter">
-          <h2>TIFR-CAM</h2>
-          <p>This is a W3C compliant free website template from <a href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a>. For full terms of use of this template please read our <a href="https://www.os-templates.com/template-terms">website template licence</a>.</p>
-          <p>You can use and modify the template for both personal and commercial use. You must keep all copyright information and credit links in the template and associated files. For more HTML5 templates visit <a href="https://www.os-templates.com/">free website templates</a>.</p>
-        </article>
-        <!-- article 2 -->
-        <article class="two_quarter lastbox">
-          <figure>
-            <ul class="clear">
-              <li><a href="#"><img src="images/demo/130x130.gif" width="130" height="130" alt=""></a></li>
-              <li><a href="#"><img src="images/demo/130x130.gif" width="130" height="130" alt=""></a></li>
-              <li class="last"><a href="#"><img src="images/demo/130x130.gif" width="130" height="130" alt=""></a></li>
-            </ul>
-            <figcaption><a href="#">View Our Image Gallery Here &raquo;</a></figcaption>
-          </figure>
-        </article>
-      </section>
-    </div>
-    <!-- ########################################################################################## -->
-    <!-- ########################################################################################## -->
-    <!-- ########################################################################################## -->
-    <!-- ########################################################################################## -->
-    <div id="homepage" class="last clear">
-      <section class="one_quarter">
-        <h2 class="title">From The Blog</h2>
-        <article>
-          <header>
-            <h2>Post Title</h2>
-            <address>
-            <a href="#">Admin</a>, domainname.com
-            </address>
-            <time datetime="2000-04-06">Friday, 6<sup>th</sup> April 2000</time>
-          </header>
-          <p>Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet.</p>
-          <footer class="more"><a href="#">Read More &raquo;</a></footer>
-        </article>
-      </section>
-      <section class="one_quarter">
-        <h2 class="title">Quick Links</h2>
-        <nav>
-          <ul>
-            <li><a href="#">Lorem ipsum dolor sit</a></li>
-            <li><a href="#">Amet consectetur</a></li>
-            <li><a href="#">Praesent vel sem id</a></li>
-            <li><a href="#">Curabitur hendrerit est</a></li>
-            <li class="last"><a href="#">Sed a nulla urna</a></li>
-          </ul>
-        </nav>
-      </section>
-      <section class="two_quarter lastbox">
-        <h2 class="title">About US</h2>
-        <img class="imgl" src="images/demo/130x130.gif" width="130" height="130" alt="">
-        <p>Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit.</p>
-        <footer class="more"><a href="#">Read More &raquo;</a></footer>
-      </section>
-    </div>
-    <!-- / content body -->
-  </div>
-</div>
-<!-- Footer -->
-<div class="wrapper row3">
-  <footer id="footer" class="clear">
-    <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Domain Name</a></p>
-    <p class="fl_right">Template by <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+
+    <!-- ===== Research ===== -->
+    <section id="research">
+      <h2 class="section-title"><span class="num">02</span>Research Interests</h2>
+      <div class="cards">
+        <div class="card"><h3>Hyperbolic conservation laws</h3><p>Numerical schemes for hyperbolic conservation laws.</p></div>
+        <div class="card"><h3>WENO schemes</h3><p>Weighted Essentially Non-Oscillatory reconstruction, including adaptive-order and multi-level variants.</p></div>
+        <div class="card"><h3>Discontinuous Galerkin methods</h3><p>Including constraint-preserving and divergence-free DG for MHD.</p></div>
+        <div class="card"><h3>Hybrid methods</h3><p>Hybrid schemes for convection–diffusion problems.</p></div>
+        <div class="card"><h3>Degenerate parabolic equations</h3><p>Numerical schemes for degenerate parabolic equations and anisotropic diffusion.</p></div>
+        <div class="card"><h3>B-spline &amp; positivity-preserving schemes</h3><p>B-spline quasi-interpolation based schemes; positivity-preserving methods.</p></div>
+      </div>
+    </section>
+
+    <!-- ===== Education ===== -->
+    <section id="education">
+      <h2 class="section-title"><span class="num">03</span>Education</h2>
+      <ul class="timeline">
+        <li>
+          <div class="item-head"><span class="item-title">Ph.D. in Mathematics</span><span class="item-date">Jan 2010 – Aug 2016</span></div>
+          <div class="item-org">Indian Institute of Technology Bombay</div>
+          <div class="item-note">Thesis: “B-Spline Quasi-Interpolation Based Numerical Schemes for Some Evolution Equations” · Supervisor: Prof. S. Baskar</div>
+        </li>
+        <li>
+          <div class="item-head"><span class="item-title">M.Sc. in Mathematics</span><span class="item-date">Jun 2003 – Jul 2005</span></div>
+          <div class="item-org">Guru Nanak Dev University, Amritsar</div>
+        </li>
+        <li>
+          <div class="item-head"><span class="item-title">B.Sc. (Physics, Chemistry, Mathematics)</span><span class="item-date">Jun 2000 – Jul 2003</span></div>
+          <div class="item-org">D.A.V. College, Amritsar</div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===== Experience ===== -->
+    <section id="experience">
+      <h2 class="section-title"><span class="num">04</span>Experience</h2>
+      <ul class="timeline">
+        <li>
+          <!-- TODO: add start year -->
+          <div class="item-head"><span class="item-title">Assistant Professor</span><span class="item-date">Present</span></div>
+          <div class="item-org">Department of Mathematics, Mahindra University, Hyderabad</div>
+        </li>
+        <li>
+          <!-- TODO: add dates -->
+          <div class="item-head"><span class="item-title">Post-Doctoral Fellow</span><span class="item-date"></span></div>
+          <div class="item-org">School of Mathematics, IISER Thiruvananthapuram</div>
+        </li>
+        <li>
+          <!-- TODO: add end date -->
+          <div class="item-head"><span class="item-title">National Post-Doctoral Fellow</span><span class="item-date">Mar 2019 –</span></div>
+          <div class="item-org">TIFR Centre for Applicable Mathematics, Bangalore</div>
+        </li>
+        <li>
+          <div class="item-head"><span class="item-title">Institute Post-Doctoral Fellow</span><span class="item-date">Aug 2016 – Mar 2019</span></div>
+          <div class="item-org">TIFR Centre for Applicable Mathematics, Bangalore</div>
+        </li>
+        <li>
+          <div class="item-head"><span class="item-title">Research Associate</span><span class="item-date">Jan 2016 – Aug 2016</span></div>
+          <div class="item-org">Indian Institute of Technology Bombay</div>
+        </li>
+        <li>
+          <div class="item-head"><span class="item-title">Visiting Researcher</span><span class="item-date">Mar 2015 – Jun 2015</span></div>
+          <div class="item-org">Heidelberg University, Germany</div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===== Publications ===== -->
+    <section id="publications">
+      <h2 class="section-title"><span class="num">05</span>Publications</h2>
+
+      <h3 class="pub-group">Journal articles</h3>
+      <ol class="pubs">
+        <li>
+          <div class="pub-authors"><span class="me">Rakesh Kumar</span>, Praveen Chandrashekar.</div>
+          <div class="pub-title">Multi-level WENO schemes with an adaptive characteristic-wise reconstruction for system of Euler equations.</div>
+          <div class="pub-venue">Computers &amp; Fluids, 2022. <a href="https://www.sciencedirect.com/science/article/pii/S0045793022000561">[Journal]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors">Anurag Kumar, Bhavneet Kaur, <span class="me">Rakesh Kumar</span>.</div>
+          <div class="pub-title">A new fifth order finite difference WENO scheme to improve convergence rate at critical points.</div>
+          <div class="pub-venue">Wave Motion, 109, 2022. <a href="https://www.sciencedirect.com/science/article/pii/S0165212521001529">[Journal]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors">Asha K. Dond, <span class="me">Rakesh Kumar</span>.</div>
+          <div class="pub-title">Finite difference modified WENO schemes for hyperbolic conservation laws with non-convex flux.</div>
+          <div class="pub-venue">International Journal for Numerical Methods in Fluids, 93, 3005–3019, 2021. <a href="https://onlinelibrary.wiley.com/doi/10.1002/fld.5020">[Journal]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors">Dinshaw S. Balsara, <span class="me">Rakesh Kumar</span>, Praveen Chandrashekar.</div>
+          <div class="pub-title">Globally divergence-free DG scheme for ideal compressible MHD.</div>
+          <div class="pub-venue">Communications in Applied Mathematics and Computational Science, 16, 59–98, 2021. <a href="https://msp.org/camcos/2021/16-1/p03.xhtml">[Journal]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors">Praveen Chandrashekar, <span class="me">Rakesh Kumar</span>.</div>
+          <div class="pub-title">Constraint preserving discontinuous Galerkin method for ideal compressible MHD.</div>
+          <div class="pub-venue">Journal of Scientific Computing, 84, 39, 2020. <a href="https://link.springer.com/article/10.1007/s10915-020-01289-8">[Journal]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors">Ameya D. Jagtap, <span class="me">Rakesh Kumar</span>.</div>
+          <div class="pub-title">Kinetic theory based multi-level adaptive finite difference WENO schemes for compressible Euler equations.</div>
+          <div class="pub-venue">Wave Motion, 98, 102626, 2020. <a href="https://www.sciencedirect.com/science/article/pii/S0165212519304068">[Journal]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors">Samala Rathan, <span class="me">Rakesh Kumar</span>, Ameya D. Jagtap.</div>
+          <div class="pub-title">L1-type smoothness indicators based WENO scheme for nonlinear degenerate parabolic equations.</div>
+          <div class="pub-venue">Applied Mathematics and Computation, 375, 125112, 2020. <a href="https://www.sciencedirect.com/science/article/pii/S0096300320300813">[Journal]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors"><span class="me">Rakesh Kumar</span>, Ashok Choudhary, S. Baskar.</div>
+          <div class="pub-title">Modified cubic B-spline quasi-interpolation numerical scheme for hyperbolic conservation laws.</div>
+          <div class="pub-venue">Applicable Analysis, 99, 158–179, 2020. <a href="https://www.tandfonline.com/doi/abs/10.1080/00036811.2018.1489961">[Journal]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors">Asha Kumari Meena, <span class="me">Rakesh Kumar</span>, Praveen Chandrashekar.</div>
+          <div class="pub-title">Positivity-preserving finite difference WENO scheme for Ten-Moment equations with source term.</div>
+          <div class="pub-venue">Journal of Scientific Computing, 82, 15, 2020. <a href="https://link.springer.com/article/10.1007/s10915-019-01110-1">[Journal]</a> <a href="https://arxiv.org/abs/1910.04391">[arXiv]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors"><span class="me">Rakesh Kumar</span>, Praveen Chandrashekar.</div>
+          <div class="pub-title">Efficient seventh order WENO schemes of adaptive order for hyperbolic conservation laws.</div>
+          <div class="pub-venue">Computers &amp; Fluids, 190, 49–76, 2019. <a href="https://www.sciencedirect.com/science/article/pii/S0045793018305164">[Journal]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors"><span class="me">Rakesh Kumar</span>, Praveen Chandrashekar.</div>
+          <div class="pub-title">Simple smoothness indicator and multi-level adaptive order WENO scheme for hyperbolic conservation laws.</div>
+          <div class="pub-venue">Journal of Computational Physics, 375, 1059–1090, 2018. <a href="https://www.sciencedirect.com/science/article/pii/S0021999118306272">[Journal]</a> <a href="https://arxiv.org/abs/1809.03289">[arXiv]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors"><span class="me">Rakesh Kumar</span>.</div>
+          <div class="pub-title">Adaptive semi-discrete formulation of BSQI–WENO scheme for the modified Burgers’ equation.</div>
+          <div class="pub-venue">BIT Numerical Mathematics, 58, 103–132, 2018. <a href="https://link.springer.com/article/10.1007/s10543-017-0675-8">[Journal]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors"><span class="me">Rakesh Kumar</span>, S. Baskar.</div>
+          <div class="pub-title">B-spline quasi-interpolation based numerical methods for some Sobolev type equations.</div>
+          <div class="pub-venue">Journal of Computational and Applied Mathematics, 292, 41–66, 2016. <a href="https://www.sciencedirect.com/science/article/pii/S0377042715003374">[Journal]</a></div>
+        </li>
+      </ol>
+
+      <h3 class="pub-group">Conference proceedings</h3>
+      <ol class="pubs">
+        <li>
+          <div class="pub-authors"><span class="me">Rakesh Kumar</span>.</div>
+          <div class="pub-title">Hybrid FDM-WENO method for the convection-diffusion problems.</div>
+          <div class="pub-venue">XVII International Conference on Hyperbolic Problems: Theory, Numerics, Applications (HYP 2018). <a href="https://www.aimsciences.org/book/AM/volume/Volume%2010">[Book]</a></div>
+        </li>
+        <li>
+          <div class="pub-authors"><span class="me">Rakesh Kumar</span>, S. Baskar.</div>
+          <div class="pub-title">B-spline quasi-interpolation based numerical scheme for some non-linear wave equations.</div>
+          <div class="pub-venue">Proceedings of the International Conference on Mathematical Sciences (ICMS 2014), Chennai, July 17–19, 2014.</div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===== Project ===== -->
+    <section id="project">
+      <h2 class="section-title"><span class="num">06</span>Project</h2>
+      <div class="card">
+        <div class="code">Research project</div>
+        <h3>Weighted Essentially Non-Oscillatory (WENO) Reconstruction</h3>
+        <p>
+          WENO schemes are high-order accurate spatial reconstruction techniques widely used to simulate
+          compressible flows, since they resolve small-scale structures at high resolution and capture shocks
+          without spurious oscillations. Introduced by Liu et al. in the finite-volume framework and extended
+          to finite differences by Jiang and Shu, they have developed rapidly over the last two decades.
+          We recently developed new fifth- and seventh-order WENO schemes of adaptive order for 2D problems;
+          this project aims to build an efficient adaptive-order WENO scheme for 3D model problems.
+        </p>
+        <p style="margin-top:.75rem">
+          Related publications: [JCP 2018], [Computers &amp; Fluids 2019], [J. Sci. Comput. 2020],
+          [Wave Motion 2020], [IJNMF 2021] — see <a href="#publications">Publications</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact">
+      <h2 class="section-title"><span class="num">07</span>Contact</h2>
+      <div class="contact">
+        <div>
+          <h3>Email</h3>
+          <p><a href="mailto:rakeshiitb21@gmail.com">rakeshiitb21@gmail.com</a></p>
+        </div>
+        <div>
+          <h3>Address</h3>
+          <!-- TODO: add office/room number -->
+          <p>Department of Mathematics<br>Mahindra University, Hyderabad, India</p>
+        </div>
+        <div>
+          <h3>Elsewhere</h3>
+          <p><a href="https://scholar.google.co.in/citations?user=EuBKGZMAAAAJ&amp;hl=en">Google Scholar</a> · <a href="https://github.com/rakeshiitb">GitHub</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Rakesh Kumar
   </footer>
-</div>
+
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('themeBtn').addEventListener('click', function () {
+      var root = document.documentElement;
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+
+    var links = document.getElementById('navLinks');
+    document.getElementById('menuBtn').addEventListener('click', function () {
+      links.classList.toggle('open');
+    });
+    links.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') links.classList.remove('open');
+    });
+  </script>
 </body>
 </html>
