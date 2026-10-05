@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -151,6 +153,18 @@
     .pub-authors .me { text-decoration: underline; text-underline-offset: 3px; }
     .pub-venue { font-style: italic; color: var(--text-soft); }
 
+    .pill i { margin-right: .4rem; font-size: .95em; }
+    .pub-venue a { font-style: normal; font-family: var(--mono); font-size: .78rem; margin-left: .35rem; white-space: nowrap; }
+    .icon-row { display: flex; flex-wrap: wrap; gap: .9rem; font-size: 1.45rem; }
+    .icon-row a { color: var(--text-soft); }
+    .icon-row a:hover { color: var(--accent); text-decoration: none; }
+    .card.video { padding: 0; overflow: hidden; color: var(--text); }
+    .card.video:hover { text-decoration: none; }
+    .card.video img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+    .card.video h3 { padding: .8rem 1.1rem 1rem; font-size: 1rem; }
+    .card.video h3 i { color: #e62117; margin-right: .45rem; }
+    .portrait { object-position: 70% 30%; }
+
     /* Contact */
     .contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
     .contact h3 { font-family: var(--mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 500; margin-bottom: .4rem; }
@@ -196,6 +210,7 @@
         <li><a href="#experience">Experience</a></li>
         <li><a href="#publications">Publications</a></li>
         <li><a href="#project">Project</a></li>
+        <li><a href="#videos">Videos</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <div>
@@ -209,8 +224,7 @@
 
     <!-- ===== Hero ===== -->
     <header class="hero">
-      <!-- TODO: put your photo in assets/images/ and update this src -->
-      <img class="portrait" src="assets/images/profile.svg" alt="Photo of Rakesh Kumar">
+          <img class="portrait" src="assets/images/profile.jpg" alt="Photo of Rakesh Kumar">
       <div>
         <h1>Rakesh Kumar</h1>
         <p class="role">Assistant Professor</p>
@@ -219,9 +233,16 @@
         <div class="hero-links">
           <!-- TODO: add your CV as assets/files/CV.pdf, then uncomment -->
           <!-- <a class="pill" href="assets/files/CV.pdf">CV</a> -->
-          <a class="pill" href="https://scholar.google.co.in/citations?user=EuBKGZMAAAAJ&amp;hl=en">Google Scholar</a>
-          <a class="pill" href="https://github.com/rakeshiitb">GitHub</a>
-          <a class="pill" href="mailto:rakeshiitb21@gmail.com">Email</a>
+          <a class="pill" href="https://scholar.google.co.in/citations?user=EuBKGZMAAAAJ&amp;hl=en"><i class="ai ai-google-scholar"></i>Google Scholar</a>
+          <a class="pill" href="https://orcid.org/0000-0002-5829-0384"><i class="ai ai-orcid"></i>ORCID</a>
+          <a class="pill" href="https://mathscinet.ams.org/mathscinet/search/author.html?mrauthid=1124652"><i class="fa-solid fa-square-root-variable"></i>MathSciNet</a>
+          <a class="pill" href="https://www.scopus.com/authid/detail.uri?authorId=57211970697"><i class="ai ai-scopus"></i>Scopus</a>
+          <a class="pill" href="https://www.researchgate.net/profile/Rakesh-Kumar-159"><i class="ai ai-researchgate"></i>ResearchGate</a>
+          <a class="pill" href="https://publons.com/dashboard/summary/"><i class="ai ai-publons"></i>Publons</a>
+          <a class="pill" href="https://www.linkedin.com/in/rakesh-kumar-73a15a140/"><i class="fa-brands fa-linkedin"></i>LinkedIn</a>
+          <a class="pill" href="https://github.com/rakeshiitb"><i class="fa-brands fa-github"></i>GitHub</a>
+          <a class="pill" href="https://www.math.tifrbng.res.in/people/rakesh"><i class="fa-solid fa-building-columns"></i>TIFR-CAM</a>
+          <a class="pill" href="mailto:rakeshiitb21@gmail.com"><i class="fa-solid fa-envelope"></i>Email</a>
         </div>
       </div>
     </header>
@@ -326,67 +347,67 @@
         <li>
           <div class="pub-authors"><span class="me">Rakesh Kumar</span>, Praveen Chandrashekar.</div>
           <div class="pub-title">Multi-level WENO schemes with an adaptive characteristic-wise reconstruction for system of Euler equations.</div>
-          <div class="pub-venue">Computers &amp; Fluids, 2022. <a href="https://www.sciencedirect.com/science/article/pii/S0045793022000561">[Journal]</a></div>
+          <div class="pub-venue">Computers &amp; Fluids, 2022. <a href="https://www.sciencedirect.com/science/article/pii/S0045793022000561"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
         <li>
           <div class="pub-authors">Anurag Kumar, Bhavneet Kaur, <span class="me">Rakesh Kumar</span>.</div>
           <div class="pub-title">A new fifth order finite difference WENO scheme to improve convergence rate at critical points.</div>
-          <div class="pub-venue">Wave Motion, 109, 2022. <a href="https://www.sciencedirect.com/science/article/pii/S0165212521001529">[Journal]</a></div>
+          <div class="pub-venue">Wave Motion, 109, 2022. <a href="https://www.sciencedirect.com/science/article/pii/S0165212521001529"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
         <li>
           <div class="pub-authors">Asha K. Dond, <span class="me">Rakesh Kumar</span>.</div>
           <div class="pub-title">Finite difference modified WENO schemes for hyperbolic conservation laws with non-convex flux.</div>
-          <div class="pub-venue">International Journal for Numerical Methods in Fluids, 93, 3005–3019, 2021. <a href="https://onlinelibrary.wiley.com/doi/10.1002/fld.5020">[Journal]</a></div>
+          <div class="pub-venue">International Journal for Numerical Methods in Fluids, 93, 3005–3019, 2021. <a href="https://onlinelibrary.wiley.com/doi/10.1002/fld.5020"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
         <li>
           <div class="pub-authors">Dinshaw S. Balsara, <span class="me">Rakesh Kumar</span>, Praveen Chandrashekar.</div>
           <div class="pub-title">Globally divergence-free DG scheme for ideal compressible MHD.</div>
-          <div class="pub-venue">Communications in Applied Mathematics and Computational Science, 16, 59–98, 2021. <a href="https://msp.org/camcos/2021/16-1/p03.xhtml">[Journal]</a></div>
+          <div class="pub-venue">Communications in Applied Mathematics and Computational Science, 16, 59–98, 2021. <a href="https://msp.org/camcos/2021/16-1/p03.xhtml"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
         <li>
           <div class="pub-authors">Praveen Chandrashekar, <span class="me">Rakesh Kumar</span>.</div>
           <div class="pub-title">Constraint preserving discontinuous Galerkin method for ideal compressible MHD.</div>
-          <div class="pub-venue">Journal of Scientific Computing, 84, 39, 2020. <a href="https://link.springer.com/article/10.1007/s10915-020-01289-8">[Journal]</a></div>
+          <div class="pub-venue">Journal of Scientific Computing, 84, 39, 2020. <a href="https://link.springer.com/article/10.1007/s10915-020-01289-8"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
         <li>
           <div class="pub-authors">Ameya D. Jagtap, <span class="me">Rakesh Kumar</span>.</div>
           <div class="pub-title">Kinetic theory based multi-level adaptive finite difference WENO schemes for compressible Euler equations.</div>
-          <div class="pub-venue">Wave Motion, 98, 102626, 2020. <a href="https://www.sciencedirect.com/science/article/pii/S0165212519304068">[Journal]</a></div>
+          <div class="pub-venue">Wave Motion, 98, 102626, 2020. <a href="https://www.sciencedirect.com/science/article/pii/S0165212519304068"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
         <li>
           <div class="pub-authors">Samala Rathan, <span class="me">Rakesh Kumar</span>, Ameya D. Jagtap.</div>
           <div class="pub-title">L1-type smoothness indicators based WENO scheme for nonlinear degenerate parabolic equations.</div>
-          <div class="pub-venue">Applied Mathematics and Computation, 375, 125112, 2020. <a href="https://www.sciencedirect.com/science/article/pii/S0096300320300813">[Journal]</a></div>
+          <div class="pub-venue">Applied Mathematics and Computation, 375, 125112, 2020. <a href="https://www.sciencedirect.com/science/article/pii/S0096300320300813"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
         <li>
           <div class="pub-authors"><span class="me">Rakesh Kumar</span>, Ashok Choudhary, S. Baskar.</div>
           <div class="pub-title">Modified cubic B-spline quasi-interpolation numerical scheme for hyperbolic conservation laws.</div>
-          <div class="pub-venue">Applicable Analysis, 99, 158–179, 2020. <a href="https://www.tandfonline.com/doi/abs/10.1080/00036811.2018.1489961">[Journal]</a></div>
+          <div class="pub-venue">Applicable Analysis, 99, 158–179, 2020. <a href="https://www.tandfonline.com/doi/abs/10.1080/00036811.2018.1489961"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
         <li>
           <div class="pub-authors">Asha Kumari Meena, <span class="me">Rakesh Kumar</span>, Praveen Chandrashekar.</div>
           <div class="pub-title">Positivity-preserving finite difference WENO scheme for Ten-Moment equations with source term.</div>
-          <div class="pub-venue">Journal of Scientific Computing, 82, 15, 2020. <a href="https://link.springer.com/article/10.1007/s10915-019-01110-1">[Journal]</a> <a href="https://arxiv.org/abs/1910.04391">[arXiv]</a></div>
+          <div class="pub-venue">Journal of Scientific Computing, 82, 15, 2020. <a href="https://link.springer.com/article/10.1007/s10915-019-01110-1"><i class="fa-solid fa-file-lines"></i> Journal</a> <a href="https://arxiv.org/abs/1910.04391"><i class="ai ai-arxiv"></i> arXiv</a></div>
         </li>
         <li>
           <div class="pub-authors"><span class="me">Rakesh Kumar</span>, Praveen Chandrashekar.</div>
           <div class="pub-title">Efficient seventh order WENO schemes of adaptive order for hyperbolic conservation laws.</div>
-          <div class="pub-venue">Computers &amp; Fluids, 190, 49–76, 2019. <a href="https://www.sciencedirect.com/science/article/pii/S0045793018305164">[Journal]</a></div>
+          <div class="pub-venue">Computers &amp; Fluids, 190, 49–76, 2019. <a href="https://www.sciencedirect.com/science/article/pii/S0045793018305164"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
         <li>
           <div class="pub-authors"><span class="me">Rakesh Kumar</span>, Praveen Chandrashekar.</div>
           <div class="pub-title">Simple smoothness indicator and multi-level adaptive order WENO scheme for hyperbolic conservation laws.</div>
-          <div class="pub-venue">Journal of Computational Physics, 375, 1059–1090, 2018. <a href="https://www.sciencedirect.com/science/article/pii/S0021999118306272">[Journal]</a> <a href="https://arxiv.org/abs/1809.03289">[arXiv]</a></div>
+          <div class="pub-venue">Journal of Computational Physics, 375, 1059–1090, 2018. <a href="https://www.sciencedirect.com/science/article/pii/S0021999118306272"><i class="fa-solid fa-file-lines"></i> Journal</a> <a href="https://arxiv.org/abs/1809.03289"><i class="ai ai-arxiv"></i> arXiv</a></div>
         </li>
         <li>
           <div class="pub-authors"><span class="me">Rakesh Kumar</span>.</div>
           <div class="pub-title">Adaptive semi-discrete formulation of BSQI–WENO scheme for the modified Burgers’ equation.</div>
-          <div class="pub-venue">BIT Numerical Mathematics, 58, 103–132, 2018. <a href="https://link.springer.com/article/10.1007/s10543-017-0675-8">[Journal]</a></div>
+          <div class="pub-venue">BIT Numerical Mathematics, 58, 103–132, 2018. <a href="https://link.springer.com/article/10.1007/s10543-017-0675-8"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
         <li>
           <div class="pub-authors"><span class="me">Rakesh Kumar</span>, S. Baskar.</div>
           <div class="pub-title">B-spline quasi-interpolation based numerical methods for some Sobolev type equations.</div>
-          <div class="pub-venue">Journal of Computational and Applied Mathematics, 292, 41–66, 2016. <a href="https://www.sciencedirect.com/science/article/pii/S0377042715003374">[Journal]</a></div>
+          <div class="pub-venue">Journal of Computational and Applied Mathematics, 292, 41–66, 2016. <a href="https://www.sciencedirect.com/science/article/pii/S0377042715003374"><i class="fa-solid fa-file-lines"></i> Journal</a></div>
         </li>
       </ol>
 
@@ -395,7 +416,7 @@
         <li>
           <div class="pub-authors"><span class="me">Rakesh Kumar</span>.</div>
           <div class="pub-title">Hybrid FDM-WENO method for the convection-diffusion problems.</div>
-          <div class="pub-venue">XVII International Conference on Hyperbolic Problems: Theory, Numerics, Applications (HYP 2018). <a href="https://www.aimsciences.org/book/AM/volume/Volume%2010">[Book]</a></div>
+          <div class="pub-venue">XVII International Conference on Hyperbolic Problems: Theory, Numerics, Applications (HYP 2018). <a href="https://www.aimsciences.org/book/AM/volume/Volume%2010"><i class="fa-solid fa-book"></i> Book</a></div>
         </li>
         <li>
           <div class="pub-authors"><span class="me">Rakesh Kumar</span>, S. Baskar.</div>
@@ -426,13 +447,32 @@
       </div>
     </section>
 
+    <!-- ===== Videos ===== -->
+    <section id="videos">
+      <h2 class="section-title"><span class="num">07</span>Videos</h2>
+      <div class="cards">
+        <a class="card video" href="https://www.youtube.com/watch?v=KIXWs8U6gJo">
+          <img src="https://i.ytimg.com/vi/KIXWs8U6gJo/hqdefault.jpg" alt="" loading="lazy">
+          <h3><i class="fa-brands fa-youtube"></i>Fixed Point Graph (Manim)</h3>
+        </a>
+        <a class="card video" href="https://www.youtube.com/watch?v=dCVcIjatA98">
+          <img src="https://i.ytimg.com/vi/dCVcIjatA98/hqdefault.jpg" alt="" loading="lazy">
+          <h3><i class="fa-brands fa-youtube"></i>cos(x) Taylor’s Approximation (Manim)</h3>
+        </a>
+        <a class="card video" href="https://www.youtube.com/watch?v=4aDvv6nCjMM">
+          <img src="https://i.ytimg.com/vi/4aDvv6nCjMM/hqdefault.jpg" alt="" loading="lazy">
+          <h3><i class="fa-brands fa-youtube"></i>Rotor</h3>
+        </a>
+      </div>
+    </section>
+
     <!-- ===== Contact ===== -->
     <section id="contact">
-      <h2 class="section-title"><span class="num">07</span>Contact</h2>
+      <h2 class="section-title"><span class="num">08</span>Contact</h2>
       <div class="contact">
         <div>
           <h3>Email</h3>
-          <p><a href="mailto:rakeshiitb21@gmail.com">rakeshiitb21@gmail.com</a></p>
+          <p><a href="mailto:rakeshiitb21@gmail.com"><i class="fa-solid fa-envelope"></i> rakeshiitb21@gmail.com</a></p>
         </div>
         <div>
           <h3>Address</h3>
@@ -441,7 +481,17 @@
         </div>
         <div>
           <h3>Elsewhere</h3>
-          <p><a href="https://scholar.google.co.in/citations?user=EuBKGZMAAAAJ&amp;hl=en">Google Scholar</a> · <a href="https://github.com/rakeshiitb">GitHub</a></p>
+          <p class="icon-row">
+            <a href="https://scholar.google.co.in/citations?user=EuBKGZMAAAAJ&amp;hl=en" title="Google Scholar" aria-label="Google Scholar"><i class="ai ai-google-scholar"></i></a>
+            <a href="https://orcid.org/0000-0002-5829-0384" title="ORCID" aria-label="ORCID"><i class="ai ai-orcid"></i></a>
+            <a href="https://mathscinet.ams.org/mathscinet/search/author.html?mrauthid=1124652" title="MathSciNet" aria-label="MathSciNet"><i class="fa-solid fa-square-root-variable"></i></a>
+            <a href="https://www.scopus.com/authid/detail.uri?authorId=57211970697" title="Scopus" aria-label="Scopus"><i class="ai ai-scopus"></i></a>
+            <a href="https://www.researchgate.net/profile/Rakesh-Kumar-159" title="ResearchGate" aria-label="ResearchGate"><i class="ai ai-researchgate"></i></a>
+            <a href="https://publons.com/dashboard/summary/" title="Publons" aria-label="Publons"><i class="ai ai-publons"></i></a>
+            <a href="https://www.linkedin.com/in/rakesh-kumar-73a15a140/" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://github.com/rakeshiitb" title="GitHub" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.youtube.com/watch?v=KIXWs8U6gJo" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </p>
         </div>
       </div>
     </section>
