@@ -208,6 +208,31 @@
       .portrait { width: 180px; }
       section { padding-top: 3rem; }
     }
+
+    /* Research gallery slideshow */
+    .slideshow { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+    .slides { display: grid; }
+    .slide { grid-area: 1 / 1; margin: 0; opacity: 0; visibility: hidden; transition: opacity .5s ease, visibility .5s; }
+    .slide.is-active { opacity: 1; visibility: visible; }
+    .slide-img { background: #fff; height: clamp(240px, 52vw, 460px); display: flex; align-items: center; justify-content: center; padding: 1rem 3.5rem; border-bottom: 1px solid var(--line); }
+    .slide-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .slide figcaption { padding: .9rem 1.2rem 0; font-size: .95rem; color: var(--text-soft); min-height: 5.2rem; }
+    .slide-title { display: block; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+    .slide figcaption a { font-family: var(--mono); font-size: .78rem; margin-left: .3rem; white-space: nowrap; }
+    .ss-btn {
+      position: absolute; top: calc(clamp(240px, 52vw, 460px) / 2); transform: translateY(-50%);
+      width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 1px solid var(--line);
+      background: var(--surface); color: var(--text-soft); cursor: pointer; box-shadow: 0 2px 8px var(--shadow);
+    }
+    .ss-btn:hover, .ss-play:hover { border-color: var(--accent); color: var(--accent); }
+    .ss-prev { left: .6rem; } .ss-next { right: .6rem; }
+    .ss-bar { display: flex; align-items: center; justify-content: center; gap: .8rem; padding: .6rem 1rem 1rem; }
+    .ss-dots { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .dot { width: .6rem; height: .6rem; border-radius: 50%; border: 0; padding: 0; background: var(--line); cursor: pointer; }
+    .dot.is-active { background: var(--accent); }
+    .ss-play { background: none; border: 1px solid var(--line); border-radius: 50%; width: 1.9rem; height: 1.9rem; color: var(--text-soft); cursor: pointer; font-size: .75rem; }
+    @media (max-width: 600px) { .slide-img { padding: .75rem 2.75rem; } .ss-btn { width: 2rem; height: 2rem; } .ss-prev { left: .35rem; } .ss-next { right: .35rem; } }
+    @media (prefers-reduced-motion: reduce) { .slide { transition: none; } }
   </style>
   <script>
     // Apply saved/system theme before paint to avoid a flash.
@@ -227,6 +252,7 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#about">About</a></li>
         <li><a href="#research">Research</a></li>
+        <li><a href="#gallery">Gallery</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#publications">Publications</a></li>
@@ -323,9 +349,56 @@
       </div>
     </section>
 
+    <!-- ===== Gallery ===== -->
+    <section id="gallery">
+      <h2 class="section-title"><span class="num">03</span>Research Gallery</h2>
+      <div class="slideshow" id="slideshow" aria-roledescription="carousel" aria-label="Figures from my research">
+        <div class="slides">
+          <figure class="slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 8">
+            <div class="slide-img"><img src="assets/images/research/kelvin-helmholtz.jpg" alt="Kelvin–Helmholtz instability: simulation result" loading="eager"></div>
+            <figcaption><span class="slide-title">Kelvin–Helmholtz instability</span>Density at T = 0.8 on a 512 × 512 mesh, computed with the multi-level adaptive-order WENO-AO(5,4,3) scheme. <a href="https://arxiv.org/abs/1809.03289">J. Comput. Phys. 2018</a></figcaption>
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="2 of 8" aria-hidden="true">
+            <div class="slide-img"><img src="assets/images/research/double-mach.jpg" alt="Double Mach reflection: simulation result" loading="lazy"></div>
+            <figcaption><span class="slide-title">Double Mach reflection</span>Density contours at T = 0.2 on a 1600 × 400 mesh, computed with WENO-AO(5,4,3). <a href="https://arxiv.org/abs/1809.03289">J. Comput. Phys. 2018</a></figcaption>
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="3 of 8" aria-hidden="true">
+            <div class="slide-img"><img src="assets/images/research/rayleigh-taylor.jpg" alt="Rayleigh–Taylor instability: simulation result" loading="lazy"></div>
+            <figcaption><span class="slide-title">Rayleigh–Taylor instability</span>Density at T = 1.95 on a 200 × 800 mesh, computed with WENO-AO(5,4,3). <a href="https://arxiv.org/abs/1809.03289">J. Comput. Phys. 2018</a></figcaption>
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="4 of 8" aria-hidden="true">
+            <div class="slide-img"><img src="assets/images/research/relativistic-jet.jpg" alt="Relativistic hot jet: simulation result" loading="lazy"></div>
+            <figcaption><span class="slide-title">Relativistic hot jet</span>Rest-mass density at t = 30 for a pressure-matched jet with beam speed 0.99c, computed with the constraint-preserving WENO-AOI scheme (RC equation of state). <a href="https://arxiv.org/abs/2608.29654">arXiv 2026</a></figcaption>
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="5 of 8" aria-hidden="true">
+            <div class="slide-img"><img src="assets/images/research/shock-bubble.jpg" alt="Relativistic shock–bubble interaction: simulation result" loading="lazy"></div>
+            <figcaption><span class="slide-title">Relativistic shock–bubble interaction</span>Density at t = 450 on a 650 × 180 mesh: a shock hits a gas bubble, which deforms and rolls up into vortices. WENO-AOI scheme, RC equation of state. <a href="https://arxiv.org/abs/2608.29654">arXiv 2026</a></figcaption>
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="6 of 8" aria-hidden="true">
+            <div class="slide-img"><img src="assets/images/research/relativistic-riemann.jpg" alt="2D relativistic Riemann problem: simulation result" loading="lazy"></div>
+            <figcaption><span class="slide-title">2D relativistic Riemann problem</span>ln(ρ) at t = 0.4 on a 400 × 400 mesh, computed with WENO-AOI (RC equation of state). <a href="https://arxiv.org/abs/2608.29654">arXiv 2026</a></figcaption>
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="7 of 8" aria-hidden="true">
+            <div class="slide-img"><img src="assets/images/research/troubled-cells.jpg" alt="Troubled-cell detection: simulation result" loading="lazy"></div>
+            <figcaption><span class="slide-title">Troubled-cell detection</span>Cells flagged by the troubled-cell indicator (red) in the H1-WENO hybrid scheme for a 2D relativistic Riemann problem at T = 0.4 on a 400 × 400 mesh. Characteristic-wise WENO reconstruction is used only in these cells; cheaper reconstructions are used in smooth regions. <a href="https://arxiv.org/abs/2608.29776">arXiv 2026</a></figcaption>
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="8 of 8" aria-hidden="true">
+            <div class="slide-img"><img src="assets/images/research/thin-film.jpg" alt="Two-layer thin film: simulation result" loading="lazy"></div>
+            <figcaption><span class="slide-title">Two-layer thin film</span>Film height f for a perturbed circular solutal front at t = 0.2 on a 400 × 400 mesh, computed with the Riemann invariant-based alternative WENO scheme. <a href="https://arxiv.org/abs/2606.17862">arXiv 2026</a></figcaption>
+          </figure>
+        </div>
+        <button type="button" class="ss-btn ss-prev" aria-label="Previous slide"><i class="fa-solid fa-chevron-left"></i></button>
+        <button type="button" class="ss-btn ss-next" aria-label="Next slide"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="ss-bar">
+          <div class="ss-dots"><button type="button" class="dot is-active" aria-label="Show slide 1"></button><button type="button" class="dot" aria-label="Show slide 2"></button><button type="button" class="dot" aria-label="Show slide 3"></button><button type="button" class="dot" aria-label="Show slide 4"></button><button type="button" class="dot" aria-label="Show slide 5"></button><button type="button" class="dot" aria-label="Show slide 6"></button><button type="button" class="dot" aria-label="Show slide 7"></button><button type="button" class="dot" aria-label="Show slide 8"></button></div>
+          <button type="button" class="ss-play" aria-label="Pause slideshow"><i class="fa-solid fa-pause"></i></button>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== Education ===== -->
     <section id="education">
-      <h2 class="section-title"><span class="num">03</span>Education</h2>
+      <h2 class="section-title"><span class="num">04</span>Education</h2>
       <ul class="timeline">
         <li>
           <div class="item-head"><span class="item-title">Ph.D. in Mathematics</span><span class="item-date">Jan 2010 – Aug 2016</span></div>
@@ -345,7 +418,7 @@
 
     <!-- ===== Experience ===== -->
     <section id="experience">
-      <h2 class="section-title"><span class="num">04</span>Experience</h2>
+      <h2 class="section-title"><span class="num">05</span>Experience</h2>
       <ul class="timeline">
         <li>
           <!-- TODO: add start year -->
@@ -379,7 +452,7 @@
 
     <!-- ===== Publications ===== -->
     <section id="publications">
-      <h2 class="section-title"><span class="num">05</span>Publications</h2>
+      <h2 class="section-title"><span class="num">06</span>Publications</h2>
 
       <h3 class="pub-group">Journal articles</h3>
       <ol class="pubs">
@@ -521,7 +594,7 @@
 
     <!-- ===== Project ===== -->
     <section id="project">
-      <h2 class="section-title"><span class="num">06</span>Project</h2>
+      <h2 class="section-title"><span class="num">07</span>Project</h2>
       <div class="card">
         <div class="code">Research project</div>
         <h3>Weighted Essentially Non-Oscillatory (WENO) Reconstruction</h3>
@@ -542,7 +615,7 @@
 
     <!-- ===== Videos ===== -->
     <section id="videos">
-      <h2 class="section-title"><span class="num">07</span>Videos</h2>
+      <h2 class="section-title"><span class="num">08</span>Videos</h2>
       <div class="cards">
         <a class="card video" href="https://www.youtube.com/watch?v=KIXWs8U6gJo">
           <img src="https://i.ytimg.com/vi/KIXWs8U6gJo/hqdefault.jpg" alt="" loading="lazy">
@@ -561,7 +634,7 @@
 
     <!-- ===== Contact ===== -->
     <section id="contact">
-      <h2 class="section-title"><span class="num">08</span>Contact</h2>
+      <h2 class="section-title"><span class="num">09</span>Contact</h2>
       <div class="contact">
         <div>
           <h3>Email</h3>
@@ -612,6 +685,47 @@
     links.addEventListener('click', function (e) {
       if (e.target.tagName === 'A') links.classList.remove('open');
     });
+
+    (function () {
+      var root = document.getElementById('slideshow');
+      if (!root) return;
+      var slides = root.querySelectorAll('.slide');
+      var dots = root.querySelectorAll('.dot');
+      var playBtn = root.querySelector('.ss-play');
+      var i = 0, timer = null, paused = false;
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function show(n) {
+        slides[i].classList.remove('is-active'); slides[i].setAttribute('aria-hidden', 'true'); dots[i].classList.remove('is-active');
+        i = (n + slides.length) % slides.length;
+        slides[i].classList.add('is-active'); slides[i].removeAttribute('aria-hidden'); dots[i].classList.add('is-active');
+      }
+      function stop() { clearInterval(timer); timer = null; }
+      function start() { stop(); if (!paused) timer = setInterval(function () { show(i + 1); }, 6000); }
+      function setPaused(p) {
+        paused = p;
+        playBtn.innerHTML = p ? '<i class="fa-solid fa-play"></i>' : '<i class="fa-solid fa-pause"></i>';
+        playBtn.setAttribute('aria-label', p ? 'Play slideshow' : 'Pause slideshow');
+        p ? stop() : start();
+      }
+      root.querySelector('.ss-prev').addEventListener('click', function () { show(i - 1); start(); });
+      root.querySelector('.ss-next').addEventListener('click', function () { show(i + 1); start(); });
+      dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); start(); }); });
+      playBtn.addEventListener('click', function () { setPaused(!paused); });
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', start);
+      root.addEventListener('focusin', stop);
+      root.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') { show(i - 1); } else if (e.key === 'ArrowRight') { show(i + 1); }
+      });
+      var x0 = null;
+      root.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      root.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0; x0 = null;
+        if (Math.abs(dx) > 40) { show(dx < 0 ? i + 1 : i - 1); start(); }
+      });
+      if (reduced) setPaused(true); else start();
+    })();
   </script>
 </body>
 </html>
