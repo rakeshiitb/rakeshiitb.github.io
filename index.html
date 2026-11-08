@@ -210,17 +210,20 @@
     }
 
     /* Research gallery slideshow */
-    .slideshow { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+    .slideshow { --ph: clamp(280px, 50vw, 470px); position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
     .slides { display: grid; }
     .slide { grid-area: 1 / 1; margin: 0; opacity: 0; visibility: hidden; transition: opacity .5s ease, visibility .5s; }
     .slide.is-active { opacity: 1; visibility: visible; }
-    .slide-img { background: #fff; height: clamp(240px, 52vw, 460px); display: flex; align-items: center; justify-content: center; padding: 1rem 3.5rem; border-bottom: 1px solid var(--line); }
-    .slide-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
-    .slide figcaption { padding: .9rem 1.2rem 0; font-size: .95rem; color: var(--text-soft); min-height: 5.2rem; }
-    .slide-title { display: block; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+    .slide-figs { background: #fff; height: var(--ph); display: grid; gap: 1rem; padding: 1rem 3.5rem .8rem; border-bottom: 1px solid var(--line); }
+    .slide-figs.pair { grid-template-columns: 1fr 1fr; }
+    .slide-figs.stack { grid-template-rows: 1fr 1fr; gap: .6rem; }
+    .fig { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 0; min-width: 0; }
+    .fig img { flex: 1 1 auto; min-height: 0; width: 100%; object-fit: contain; }
+    .fig-label { flex: none; margin-top: .35rem; font-size: .82rem; font-weight: 600; color: #1b2328; text-align: center; line-height: 1.25; }
+    .slide figcaption { padding: .9rem 1.2rem 0; font-size: .92rem; color: var(--text-soft); min-height: 6.5rem; }
     .slide figcaption a { font-family: var(--mono); font-size: .78rem; margin-left: .3rem; white-space: nowrap; }
     .ss-btn {
-      position: absolute; top: calc(clamp(240px, 52vw, 460px) / 2); transform: translateY(-50%);
+      position: absolute; top: calc(var(--ph) / 2); transform: translateY(-50%);
       width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 1px solid var(--line);
       background: var(--surface); color: var(--text-soft); cursor: pointer; box-shadow: 0 2px 8px var(--shadow);
     }
@@ -231,7 +234,7 @@
     .dot { width: .6rem; height: .6rem; border-radius: 50%; border: 0; padding: 0; background: var(--line); cursor: pointer; }
     .dot.is-active { background: var(--accent); }
     .ss-play { background: none; border: 1px solid var(--line); border-radius: 50%; width: 1.9rem; height: 1.9rem; color: var(--text-soft); cursor: pointer; font-size: .75rem; }
-    @media (max-width: 600px) { .slide-img { padding: .75rem 2.75rem; } .ss-btn { width: 2rem; height: 2rem; } .ss-prev { left: .35rem; } .ss-next { right: .35rem; } }
+    @media (max-width: 600px) { .slide-figs { padding: .75rem 2.6rem .6rem; gap: .5rem; } .fig-label { font-size: .72rem; } .ss-btn { width: 2rem; height: 2rem; } .ss-prev { left: .35rem; } .ss-next { right: .35rem; } }
     @media (prefers-reduced-motion: reduce) { .slide { transition: none; } }
   </style>
   <script>
@@ -354,43 +357,39 @@
       <h2 class="section-title"><span class="num">03</span>Research Gallery</h2>
       <div class="slideshow" id="slideshow" aria-roledescription="carousel" aria-label="Figures from my research">
         <div class="slides">
-          <figure class="slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 8">
-            <div class="slide-img"><img src="assets/images/research/kelvin-helmholtz.jpg" alt="Kelvin–Helmholtz instability: simulation result" loading="eager"></div>
-            <figcaption><span class="slide-title">Kelvin–Helmholtz instability</span>Density at T = 0.8 on a 512 × 512 mesh, computed with the multi-level adaptive-order WENO-AO(5,4,3) scheme. <a href="https://arxiv.org/abs/1809.03289">J. Comput. Phys. 2018</a></figcaption>
+          <figure class="slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 4">
+            <div class="slide-figs pair">
+              <div class="fig"><img src="assets/images/research/kelvin-helmholtz.jpg" alt="Kelvin–Helmholtz instability: simulation result" loading="eager"><span class="fig-label">Kelvin–Helmholtz instability</span></div>
+              <div class="fig"><img src="assets/images/research/rayleigh-taylor.jpg" alt="Rayleigh–Taylor instability: simulation result" loading="eager"><span class="fig-label">Rayleigh–Taylor instability</span></div>
+            </div>
+            <figcaption>Density computed with the multi-level adaptive-order WENO-AO(5,4,3) scheme. Left: T = 0.8 on a 512 × 512 mesh. Right: T = 1.95 on a 200 × 800 mesh. <a href="https://arxiv.org/abs/1809.03289">J. Comput. Phys. 2018</a></figcaption>
           </figure>
-          <figure class="slide" role="group" aria-roledescription="slide" aria-label="2 of 8" aria-hidden="true">
-            <div class="slide-img"><img src="assets/images/research/double-mach.jpg" alt="Double Mach reflection: simulation result" loading="lazy"></div>
-            <figcaption><span class="slide-title">Double Mach reflection</span>Density contours at T = 0.2 on a 1600 × 400 mesh, computed with WENO-AO(5,4,3). <a href="https://arxiv.org/abs/1809.03289">J. Comput. Phys. 2018</a></figcaption>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="2 of 4" aria-hidden="true">
+            <div class="slide-figs stack">
+              <div class="fig"><img src="assets/images/research/double-mach.jpg" alt="Double Mach reflection: simulation result" loading="lazy"><span class="fig-label">Double Mach reflection</span></div>
+              <div class="fig"><img src="assets/images/research/shock-bubble.jpg" alt="Relativistic shock–bubble interaction: simulation result" loading="lazy"><span class="fig-label">Relativistic shock–bubble interaction</span></div>
+            </div>
+            <figcaption>Top: density contours at T = 0.2 on a 1600 × 400 mesh, WENO-AO(5,4,3). Bottom: a shock hits a gas bubble, which deforms and rolls up into vortices; density at t = 450 on a 650 × 180 mesh, WENO-AOI scheme, RC equation of state. <a href="https://arxiv.org/abs/1809.03289">J. Comput. Phys. 2018</a> <a href="https://arxiv.org/abs/2608.29654">arXiv 2026</a></figcaption>
           </figure>
-          <figure class="slide" role="group" aria-roledescription="slide" aria-label="3 of 8" aria-hidden="true">
-            <div class="slide-img"><img src="assets/images/research/rayleigh-taylor.jpg" alt="Rayleigh–Taylor instability: simulation result" loading="lazy"></div>
-            <figcaption><span class="slide-title">Rayleigh–Taylor instability</span>Density at T = 1.95 on a 200 × 800 mesh, computed with WENO-AO(5,4,3). <a href="https://arxiv.org/abs/1809.03289">J. Comput. Phys. 2018</a></figcaption>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="3 of 4" aria-hidden="true">
+            <div class="slide-figs pair">
+              <div class="fig"><img src="assets/images/research/relativistic-jet.jpg" alt="Relativistic hot jet: simulation result" loading="lazy"><span class="fig-label">Relativistic hot jet</span></div>
+              <div class="fig"><img src="assets/images/research/relativistic-riemann.jpg" alt="2D relativistic Riemann problem: simulation result" loading="lazy"><span class="fig-label">2D relativistic Riemann problem</span></div>
+            </div>
+            <figcaption>Constraint-preserving WENO-AOI scheme, RC equation of state. Left: rest-mass density at t = 30 for a pressure-matched jet with beam speed 0.99c. Right: ln(ρ) at t = 0.4 on a 400 × 400 mesh. <a href="https://arxiv.org/abs/2608.29654">arXiv 2026</a></figcaption>
           </figure>
-          <figure class="slide" role="group" aria-roledescription="slide" aria-label="4 of 8" aria-hidden="true">
-            <div class="slide-img"><img src="assets/images/research/relativistic-jet.jpg" alt="Relativistic hot jet: simulation result" loading="lazy"></div>
-            <figcaption><span class="slide-title">Relativistic hot jet</span>Rest-mass density at t = 30 for a pressure-matched jet with beam speed 0.99c, computed with the constraint-preserving WENO-AOI scheme (RC equation of state). <a href="https://arxiv.org/abs/2608.29654">arXiv 2026</a></figcaption>
-          </figure>
-          <figure class="slide" role="group" aria-roledescription="slide" aria-label="5 of 8" aria-hidden="true">
-            <div class="slide-img"><img src="assets/images/research/shock-bubble.jpg" alt="Relativistic shock–bubble interaction: simulation result" loading="lazy"></div>
-            <figcaption><span class="slide-title">Relativistic shock–bubble interaction</span>Density at t = 450 on a 650 × 180 mesh: a shock hits a gas bubble, which deforms and rolls up into vortices. WENO-AOI scheme, RC equation of state. <a href="https://arxiv.org/abs/2608.29654">arXiv 2026</a></figcaption>
-          </figure>
-          <figure class="slide" role="group" aria-roledescription="slide" aria-label="6 of 8" aria-hidden="true">
-            <div class="slide-img"><img src="assets/images/research/relativistic-riemann.jpg" alt="2D relativistic Riemann problem: simulation result" loading="lazy"></div>
-            <figcaption><span class="slide-title">2D relativistic Riemann problem</span>ln(ρ) at t = 0.4 on a 400 × 400 mesh, computed with WENO-AOI (RC equation of state). <a href="https://arxiv.org/abs/2608.29654">arXiv 2026</a></figcaption>
-          </figure>
-          <figure class="slide" role="group" aria-roledescription="slide" aria-label="7 of 8" aria-hidden="true">
-            <div class="slide-img"><img src="assets/images/research/troubled-cells.jpg" alt="Troubled-cell detection: simulation result" loading="lazy"></div>
-            <figcaption><span class="slide-title">Troubled-cell detection</span>Cells flagged by the troubled-cell indicator (red) in the H1-WENO hybrid scheme for a 2D relativistic Riemann problem at T = 0.4 on a 400 × 400 mesh. Characteristic-wise WENO reconstruction is used only in these cells; cheaper reconstructions are used in smooth regions. <a href="https://arxiv.org/abs/2608.29776">arXiv 2026</a></figcaption>
-          </figure>
-          <figure class="slide" role="group" aria-roledescription="slide" aria-label="8 of 8" aria-hidden="true">
-            <div class="slide-img"><img src="assets/images/research/thin-film.jpg" alt="Two-layer thin film: simulation result" loading="lazy"></div>
-            <figcaption><span class="slide-title">Two-layer thin film</span>Film height f for a perturbed circular solutal front at t = 0.2 on a 400 × 400 mesh, computed with the Riemann invariant-based alternative WENO scheme. <a href="https://arxiv.org/abs/2606.17862">arXiv 2026</a></figcaption>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="4 of 4" aria-hidden="true">
+            <div class="slide-figs pair">
+              <div class="fig"><img src="assets/images/research/troubled-cells.jpg" alt="Troubled-cell detection: simulation result" loading="lazy"><span class="fig-label">Troubled-cell detection</span></div>
+              <div class="fig"><img src="assets/images/research/thin-film.jpg" alt="Two-layer thin film: simulation result" loading="lazy"><span class="fig-label">Two-layer thin film</span></div>
+            </div>
+            <figcaption>Left: cells flagged (red) by the H1-WENO troubled-cell indicator for a 2D relativistic Riemann problem at T = 0.4; characteristic-wise WENO is used only there, with cheaper reconstructions in smooth regions. Right: film height f for a perturbed circular solutal front at t = 0.2 on a 400 × 400 mesh, Riemann invariant-based alternative WENO scheme. <a href="https://arxiv.org/abs/2608.29776">arXiv 2026</a> <a href="https://arxiv.org/abs/2606.17862">arXiv 2026</a></figcaption>
           </figure>
         </div>
         <button type="button" class="ss-btn ss-prev" aria-label="Previous slide"><i class="fa-solid fa-chevron-left"></i></button>
         <button type="button" class="ss-btn ss-next" aria-label="Next slide"><i class="fa-solid fa-chevron-right"></i></button>
         <div class="ss-bar">
-          <div class="ss-dots"><button type="button" class="dot is-active" aria-label="Show slide 1"></button><button type="button" class="dot" aria-label="Show slide 2"></button><button type="button" class="dot" aria-label="Show slide 3"></button><button type="button" class="dot" aria-label="Show slide 4"></button><button type="button" class="dot" aria-label="Show slide 5"></button><button type="button" class="dot" aria-label="Show slide 6"></button><button type="button" class="dot" aria-label="Show slide 7"></button><button type="button" class="dot" aria-label="Show slide 8"></button></div>
+          <div class="ss-dots"><button type="button" class="dot is-active" aria-label="Show slide 1"></button><button type="button" class="dot" aria-label="Show slide 2"></button><button type="button" class="dot" aria-label="Show slide 3"></button><button type="button" class="dot" aria-label="Show slide 4"></button></div>
           <button type="button" class="ss-play" aria-label="Pause slideshow"><i class="fa-solid fa-pause"></i></button>
         </div>
       </div>
