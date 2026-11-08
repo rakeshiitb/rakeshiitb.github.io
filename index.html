@@ -124,9 +124,14 @@
     /* Timeline (education / experience) */
     .timeline { list-style: none; position: relative; padding-left: 1.5rem; }
     .timeline::before { content: ''; position: absolute; left: 4px; top: .5rem; bottom: .5rem; width: 1px; background: var(--line); }
-    .timeline li { position: relative; margin-bottom: 1.6rem; }
+    .timeline li {
+      position: relative; margin-bottom: .85rem;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+      padding: 1rem 1.2rem; transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .timeline li:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--shadow); border-color: var(--accent); }
     .timeline li::before {
-      content: ''; position: absolute; left: -1.5rem; top: .55rem;
+      content: ''; position: absolute; left: calc(-1.5rem - 1px); top: 1.45rem;
       width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent);
     }
     .item-head { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
