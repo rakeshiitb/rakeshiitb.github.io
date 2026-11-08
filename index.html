@@ -149,9 +149,15 @@
     /* Publications */
     .pub-group { font-family: var(--mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 1.5rem 0 .75rem; }
     .pubs { list-style: none; counter-reset: pub; }
-    .pubs li { counter-increment: pub; position: relative; padding-left: 2.6rem; margin-bottom: 1.1rem; }
+    .pubs { display: grid; gap: .85rem; }
+    .pubs li {
+      counter-increment: pub; position: relative;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+      padding: 1rem 1.2rem 1rem 3.4rem; transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .pubs li:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--shadow); border-color: var(--accent); }
     .pubs li::before {
-      content: '[' counter(pub) ']'; position: absolute; left: 0; top: .1rem;
+      content: '[' counter(pub) ']'; position: absolute; left: 1.1rem; top: 1.1rem;
       font-family: var(--mono); font-size: .8rem; color: var(--accent);
     }
     .pub-title { font-weight: 600; }
